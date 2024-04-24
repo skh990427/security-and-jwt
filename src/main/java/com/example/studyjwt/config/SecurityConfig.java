@@ -1,5 +1,6 @@
 package com.example.studyjwt.config;
 
+import com.example.studyjwt.jwt.JwtFilter;
 import com.example.studyjwt.jwt.JwtUtil;
 import com.example.studyjwt.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
 
                 //jwt 필터 추가
+                .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class)
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class)
 
 
